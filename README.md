@@ -25,5 +25,14 @@ chmod +c build-n-run.sh
 sudo ./build-n-run.sh
 ```
 
+Once started, api will run at port 8000 and frontend will run at port 3000  
+
+Frontend  
+`http://localhost:3000`  
+
+Api  
+`http://localhost:8000/docs`  
+`http://localhost:8000/customers`  
+
 
 
