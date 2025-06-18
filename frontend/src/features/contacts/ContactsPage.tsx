@@ -2,7 +2,7 @@ import { BreadCrumbItem } from "@/components/SideNav/model";
 
 import Layout from "./../Layout";
 import ContactsDataGrid from "./ContactList";
-import useContactsGet from "./useContactsGet";
+import { ContactContextProvider } from "./ContectProvider";
 
 const breadCrumbs: BreadCrumbItem[] = [
   {
@@ -16,12 +16,12 @@ const breadCrumbs: BreadCrumbItem[] = [
 ];
 
 const ContactsPage = () => {
-  const {response} = useContactsGet();
-
   return (
     <Layout titleToActivate="Contacts" breadcrumbs={breadCrumbs}>
       <Layout.Title>Contacts</Layout.Title>
-      <ContactsDataGrid contacts={response ?? []} />
+      <ContactContextProvider>
+        <ContactsDataGrid />
+      </ContactContextProvider>
     </Layout>
   );
 };
