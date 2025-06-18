@@ -64,10 +64,6 @@ export const ContactContextProvider: React.FC<{ children: React.ReactNode }> = (
         setItemsPerPage(configuration?.numberOfItemsPerPage ?? 15);
     }, [configuration]);
 
-    useEffect(() => {
-        setCurrentPage(1);
-        setTotalPages(Math.ceil(filteredContacts.length / itemsPerPage));
-    }, [itemsPerPage, filteredContacts]);
 
     useEffect(() => {
         setContacts([]);
@@ -84,7 +80,8 @@ export const ContactContextProvider: React.FC<{ children: React.ReactNode }> = (
             )
         );
         setFilteredContacts(filtered);
-    }, [contacts, searchTerm]);
+        setTotalPages(itemsPerPage > 0 ? Math.ceil(filtered.length / itemsPerPage) : 0);
+    }, [contacts, searchTerm, itemsPerPage]);
 
     useEffect(() => {
         setStartIndex((currentPage - 1) * itemsPerPage);
@@ -98,13 +95,16 @@ export const ContactContextProvider: React.FC<{ children: React.ReactNode }> = (
     };
 
     const addContact = (contact: Partial<Contact>, onSuccess: (e:Contact) => void ) => {
+        const newContact = {
+            ...contact,
+            id: Math.random().toString(36).substring(2, 15), // Generate a random id for the new contact
+        }
         updateContactHttp.sendRequest({
             url: "/customers",
             method: "POST",
-            data:contact,
+            data:newContact,
             headers: { "Content-Type": "application/json" },
         }).then(() => {
-            // Assume backend returns the new contact with id
             setContacts((prev) => [...prev, contact as Contact]);
             onSuccess(contact as Contact);
         })
