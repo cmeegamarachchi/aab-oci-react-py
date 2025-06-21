@@ -96,8 +96,7 @@ export const ContactContextProvider: React.FC<{ children: React.ReactNode }> = (
 
     const addContact = (contact: Partial<Contact>, onSuccess: (e:Contact) => void ) => {
         const newContact = {
-            ...contact,
-            id: Math.random().toString(36).substring(2, 15), // Generate a random id for the new contact
+            ...contact
         }
         updateContactHttp.sendRequest({
             url: "/customers",

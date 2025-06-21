@@ -8,6 +8,8 @@ import { PencilIcon } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import ContactForm, { ContactFormValues } from "./ContactForm"
 import { useContacts } from "./ContectProvider"
+import { toast } from "@/hooks/use-toast"
+
 
 
 const ContactsDataGrid:React.FC = () => {
@@ -15,12 +17,22 @@ const ContactsDataGrid:React.FC = () => {
   const [editingContact, setEditingContact] = useState<Contact | null>(null)
   const {reloadContacts, contacts, addContact, updateContact, searchTerm, setSearchTerm
     , filteredContacts, startIndex, endIndex, currentPage, setCurrentPage
-    , totalPages} = useContacts()
+    , totalPages, error} = useContacts()
   
 
   useEffect(() => {
     reloadContacts()
-  }, [])  
+  }, [])
+  
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: "Error",
+        description: `Failed to process request. Plesae review application logs for more details.`,
+        variant: "destructive",
+      })
+    }
+  }, [error])
 
   const handleEdit = (id: string) => {
     const contact = contacts.find((c) => c.id === id) || null
