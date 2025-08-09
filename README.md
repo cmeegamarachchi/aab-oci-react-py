@@ -33,5 +33,12 @@ Api
 `http://localhost:8000/docs`  
 `http://localhost:8000/customers`  
 
+## Upgrade
+### Upgrade shad-cn components
+To upgrade shad-cn components run `update:shadcn` custom script
+```bash
+cd frontend
+npm run update:shadcn
+``` 
 
 
