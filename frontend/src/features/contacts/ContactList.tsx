@@ -30,6 +30,9 @@ const ContactsDataGrid:React.FC = () => {
         title: "Error",
         description: `Failed to process request. Plesae review application logs for more details.`,
         variant: "destructive",
+        onClick: (e) => {
+          e.stopPropagation();
+        },
       })
     }
   }, [error])
